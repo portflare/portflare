@@ -105,6 +105,8 @@ Server dashboard auth is expected to be handled by a front proxy that injects:
 
 Clients authenticate using a per-user API key issued by the server.
 
+Issued client keys are prefixed with `pf_`.
+
 ### Local testing without auth
 
 For local testing only, you can disable dashboard auth entirely:

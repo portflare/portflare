@@ -858,7 +858,7 @@ func (s *Server) handleRotateKey(w http.ResponseWriter, r *http.Request) {
   }
 
   s.stateMu.Lock()
-  user.APIKey = randomToken(24)
+  user.APIKey = newAPIKey()
   user.UpdatedAt = time.Now().UTC()
   err = s.saveStateLocked()
   s.stateMu.Unlock()
@@ -1202,7 +1202,7 @@ func (s *Server) ensureUser(identity authIdentity) (*User, error) {
     UserName:        identity.UserName,
     PublicUserLabel: identity.PublicUserLabel,
     Email:           identity.Email,
-    APIKey:          randomToken(24),
+    APIKey:          newAPIKey(),
     CreatedAt:       now,
     UpdatedAt:       now,
   }
@@ -1342,6 +1342,10 @@ func randomToken(bytesLen int) string {
   buf := make([]byte, bytesLen)
   _, _ = rand.Read(buf)
   return hex.EncodeToString(buf)
+}
+
+func newAPIKey() string {
+  return "pf_" + randomToken(24)
 }
 
 func subtleEqual(a, b string) bool {

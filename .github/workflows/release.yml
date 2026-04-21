@@ -32,10 +32,10 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version-file: reverse-helper/go.mod
+          go-version-file: go.mod
 
       - name: Build release artifacts
-        working-directory: reverse-helper
+        working-directory: .
         env:
           GOOS: ${{ matrix.goos }}
           GOARCH: ${{ matrix.goarch }}
@@ -72,10 +72,10 @@ jobs:
         with:
           name: release-${{ matrix.goos }}-${{ matrix.goarch }}
           path: |
-            reverse-helper/dist/*.tar.gz
-            reverse-helper/dist/*.zip
-            reverse-helper/dist/reverse-server-*
-            reverse-helper/dist/reverse-client-*
+            dist/*.tar.gz
+            dist/*.zip
+            dist/reverse-server-*
+            dist/reverse-client-*
 
   github-release:
     runs-on: ubuntu-latest

@@ -19,9 +19,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: reverse-helper
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,7 +26,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version-file: reverse-helper/go.mod
+          go-version-file: go.mod
 
       - name: Cache Go build
         uses: actions/cache@v4
@@ -37,7 +34,7 @@ jobs:
           path: |
             ~/.cache/go-build
             ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('reverse-helper/go.sum') }}
+          key: ${{ runner.os }}-go-${{ hashFiles('go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
 
@@ -63,8 +60,8 @@ jobs:
       - name: Build image
         uses: docker/build-push-action@v6
         with:
-          context: reverse-helper
-          file: reverse-helper/${{ matrix.dockerfile }}
+          context: .
+          file: ${{ matrix.dockerfile }}
           push: false
           load: false
           cache-from: type=gha

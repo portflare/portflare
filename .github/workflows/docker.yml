@@ -25,11 +25,11 @@ jobs:
       matrix:
         include:
           - image: ghcr.io/portflare/portflare-server
-            dockerfile: reverse-helper/examples/docker/server.Dockerfile
+            dockerfile: examples/docker/server.Dockerfile
           - image: ghcr.io/portflare/portflare-client
-            dockerfile: reverse-helper/examples/docker/client.Dockerfile
+            dockerfile: examples/docker/client.Dockerfile
           - image: ghcr.io/portflare/portflare-embedded-example
-            dockerfile: reverse-helper/examples/docker/app-with-embedded-client.Dockerfile
+            dockerfile: examples/docker/app-with-embedded-client.Dockerfile
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -58,7 +58,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: reverse-helper
+          context: .
           file: ${{ matrix.dockerfile }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}

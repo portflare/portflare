@@ -35,47 +35,17 @@ jobs:
           go-version-file: go.mod
 
       - name: Build release artifacts
-        working-directory: .
-        env:
-          GOOS: ${{ matrix.goos }}
-          GOARCH: ${{ matrix.goarch }}
-        run: |
-          set -eux
-          mkdir -p dist
-          suffix=""
-          if [ "$GOOS" = "windows" ]; then
-            suffix=".exe"
-          fi
-
-          server_bin="reverse-server-${GOOS}-${GOARCH}${suffix}"
-          client_bin="reverse-client-${GOOS}-${GOARCH}${suffix}"
-          archive_base="portflare-${GOOS}-${GOARCH}"
-
-          CGO_ENABLED=0 go build -o "dist/${server_bin}" ./cmd/reverse-server
-          CGO_ENABLED=0 go build -o "dist/${client_bin}" ./cmd/reverse-client
-
-          mkdir -p "dist/${archive_base}"
-          cp "dist/${server_bin}" "dist/${archive_base}/"
-          cp "dist/${client_bin}" "dist/${archive_base}/"
-          cp README.md "dist/${archive_base}/README.md"
-          cp -R docs "dist/${archive_base}/docs"
-          cp -R examples "dist/${archive_base}/examples"
-
-          if [ "$GOOS" = "windows" ]; then
-            (cd dist && zip -r "${archive_base}.zip" "${archive_base}")
-          else
-            tar -C dist -czf "dist/${archive_base}.tar.gz" "${archive_base}"
-          fi
+        run: make release PLATFORMS="${{ matrix.goos }}/${{ matrix.goarch }}" VERSION="${{ github.ref_name }}" COMMIT="${{ github.sha }}"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: release-${{ matrix.goos }}-${{ matrix.goarch }}
           path: |
-            dist/*.tar.gz
-            dist/*.zip
-            dist/reverse-server-*
-            dist/reverse-client-*
+            dist/release/*.tar.gz
+            dist/release/*.zip
+            dist/bin/reverse-server-*
+            dist/bin/reverse-client-*
 
   github-release:
     runs-on: ubuntu-latest

@@ -25,6 +25,8 @@ import (
   "time"
 
   "github.com/gorilla/websocket"
+
+  "github.com/portflare/portflare/internal/buildinfo"
 )
 
 type Config struct {
@@ -176,6 +178,19 @@ const (
 )
 
 func main() {
+  if len(os.Args) > 1 {
+    switch os.Args[1] {
+    case "version", "--version", "-version", "-v":
+      fmt.Println(buildinfo.Summary("reverse-server"))
+      return
+    case "help", "--help", "-h":
+      fmt.Println("usage:")
+      fmt.Println("  reverse-server")
+      fmt.Println("  reverse-server version")
+      return
+    }
+  }
+
   cfg := loadConfig()
   logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}))
 
@@ -194,7 +209,8 @@ func main() {
   }
 
   go func() {
-    logger.Info("reverse server listening", "addr", cfg.ListenAddr, "base_domain", cfg.PublicBaseDomain)
+    version, commit, buildDate := buildinfo.Effective()
+    logger.Info("reverse server listening", "addr", cfg.ListenAddr, "base_domain", cfg.PublicBaseDomain, "version", version, "commit", commit, "build_date", buildDate)
     if err := httpServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
       logger.Error("http server failed", "error", err)
       os.Exit(1)

@@ -23,6 +23,8 @@ import (
   "time"
 
   "github.com/gorilla/websocket"
+
+  "github.com/portflare/portflare/internal/buildinfo"
 )
 
 type Config struct {
@@ -98,15 +100,33 @@ type Service struct {
 
 func main() {
   args := os.Args[1:]
+  if len(args) > 0 {
+    switch args[0] {
+    case "version", "--version", "-version", "-v":
+      fmt.Println(buildinfo.Summary("reverse-client"))
+      return
+    case "help", "--help", "-h":
+      printUsage(os.Stdout)
+      return
+    }
+  }
   if len(args) > 0 && args[0] != "daemon" {
     os.Exit(runCLI(args))
   }
   runDaemon()
 }
 
+func printUsage(w io.Writer) {
+  fmt.Fprintln(w, "usage:")
+  fmt.Fprintln(w, "  reverse-client daemon")
+  fmt.Fprintln(w, "  reverse-client expose --app <name> --target <url> [--public-port <port>]")
+  fmt.Fprintln(w, "  reverse-client list")
+  fmt.Fprintln(w, "  reverse-client version")
+}
+
 func runCLI(args []string) int {
   if len(args) == 0 {
-    fmt.Fprintln(os.Stderr, "usage: reverse-client <daemon|expose|list>")
+    printUsage(os.Stderr)
     return 1
   }
 
@@ -137,7 +157,7 @@ func runCLI(args []string) int {
       }
     }
     if app == "" || target == "" {
-      fmt.Fprintln(os.Stderr, "usage: reverse-client expose --app <name> --target <url> [--public-port <port>]")
+      printUsage(os.Stderr)
       return 1
     }
     payload, _ := json.Marshal(map[string]any{"app_name": app, "target_url": target, "public_port": publicPort})
@@ -168,8 +188,14 @@ func runCLI(args []string) int {
     }
     fmt.Println(string(body))
     return 0
+  case "version":
+    fmt.Println(buildinfo.Summary("reverse-client"))
+    return 0
+  case "help", "--help", "-h":
+    printUsage(os.Stdout)
+    return 0
   default:
-    fmt.Fprintln(os.Stderr, "usage: reverse-client <daemon|expose|list>")
+    printUsage(os.Stderr)
     return 1
   }
 }
@@ -191,6 +217,8 @@ func runDaemon() {
   }
 
   logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}))
+  version, commit, buildDate := buildinfo.Effective()
+  logger.Info("reverse client starting", "version", version, "commit", commit, "build_date", buildDate)
   if cfg.ClientKey != "" && !isValidClientKey(cfg.ClientKey) {
     logger.Error("invalid client key format", "message", "REVERSE_CLIENT_KEY must start with pf_")
     os.Exit(1)

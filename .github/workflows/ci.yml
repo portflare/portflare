@@ -41,6 +41,9 @@ jobs:
       - name: Run go test
         run: go test ./...
 
+      - name: Build binaries
+        run: make build VERSION=ci COMMIT=${GITHUB_SHA::7}
+
   docker-build:
     runs-on: ubuntu-latest
     strategy:
@@ -64,5 +67,9 @@ jobs:
           file: ${{ matrix.dockerfile }}
           push: false
           load: false
+          build-args: |
+            VERSION=ci
+            COMMIT=${{ github.sha }}
+            BUILD_DATE=${{ github.event.head_commit.timestamp || github.run_id }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

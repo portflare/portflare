@@ -159,6 +159,24 @@ Planned next steps:
 - shared internal packages
 - production hardening and tests
 
+## Build and release
+
+Local commands:
+
+```bash
+make build
+make release
+reverse-server --version
+reverse-client version
+```
+
+Builds embed version metadata into the binaries using Go linker flags, with runtime fallback via Go build info (`runtime/debug`).
+
+Artifacts are written to:
+
+- `dist/bin/` for local binary builds
+- `dist/release/` for packaged release archives
+
 ## GitHub Actions
 
 Included workflows:
@@ -168,6 +186,9 @@ Included workflows:
   - builds the example Docker images
 - `docker.yml`
   - builds and publishes images to GHCR on `main`, tags, or manual dispatch
+- `release-please.yml`
+  - manages changelog updates and release PRs from conventional commits
+  - creates version tags such as `v0.1.0`
 - `release.yml`
   - builds tagged binaries for Linux, macOS, and Windows
   - packages archives with docs and examples

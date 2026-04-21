@@ -12,6 +12,15 @@ import (
   "time"
 )
 
+func TestIsValidClientKey(t *testing.T) {
+  if !isValidClientKey("pf_123") {
+    t.Fatal("expected pf_ prefix to be accepted")
+  }
+  if isValidClientKey("abc123") {
+    t.Fatal("expected missing pf_ prefix to be rejected")
+  }
+}
+
 func TestToWebSocketURL(t *testing.T) {
   got, err := toWebSocketURL("https://reverse.example.test")
   if err != nil {

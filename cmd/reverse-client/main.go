@@ -191,6 +191,10 @@ func runDaemon() {
   }
 
   logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}))
+  if cfg.ClientKey != "" && !isValidClientKey(cfg.ClientKey) {
+    logger.Error("invalid client key format", "message", "REVERSE_CLIENT_KEY must start with pf_")
+    os.Exit(1)
+  }
   svc := &Service{cfg: cfg, logger: logger, apps: map[string]*AppRegistration{}}
   if err := svc.loadState(); err != nil {
     logger.Error("failed to load client state", "error", err)
@@ -740,6 +744,10 @@ func writeJSON(w http.ResponseWriter, status int, payload any) {
 
 func writeError(w http.ResponseWriter, status int, msg string) {
   writeJSON(w, status, map[string]string{"error": msg})
+}
+
+func isValidClientKey(v string) bool {
+  return strings.HasPrefix(strings.TrimSpace(v), "pf_")
 }
 
 func (s *Service) sendIfConnected(msg ConnectMessage) error {

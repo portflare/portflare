@@ -1213,6 +1213,9 @@ func (s *Server) ensureUser(identity authIdentity) (*User, error) {
 }
 
 func (s *Server) findUserByKey(key string) (*User, bool) {
+  if !isValidAPIKey(key) {
+    return nil, false
+  }
   s.stateMu.RLock()
   defer s.stateMu.RUnlock()
   for _, u := range s.state.Users {
@@ -1346,6 +1349,10 @@ func randomToken(bytesLen int) string {
 
 func newAPIKey() string {
   return "pf_" + randomToken(24)
+}
+
+func isValidAPIKey(v string) bool {
+  return strings.HasPrefix(strings.TrimSpace(v), "pf_")
 }
 
 func subtleEqual(a, b string) bool {

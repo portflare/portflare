@@ -6,6 +6,15 @@ import (
   "testing"
 )
 
+func TestIsValidAPIKey(t *testing.T) {
+  if !isValidAPIKey("pf_123") {
+    t.Fatal("expected pf_ prefix to be accepted")
+  }
+  if isValidAPIKey("abc123") {
+    t.Fatal("expected missing pf_ prefix to be rejected")
+  }
+}
+
 func TestMatchHosts(t *testing.T) {
   srv := &Server{cfg: Config{PublicBaseDomain: "reverse.example.test"}}
 

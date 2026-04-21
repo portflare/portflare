@@ -107,6 +107,8 @@ Clients authenticate using a per-user API key issued by the server.
 
 Issued client keys are prefixed with `pf_`.
 
+The server and client both validate this prefix, so `REVERSE_CLIENT_KEY` must begin with `pf_`.
+
 ### Local testing without auth
 
 For local testing only, you can disable dashboard auth entirely:

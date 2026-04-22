@@ -22,7 +22,7 @@ The server handles:
 
 See:
 
-- [`../server`](../server)
+- [`github.com/portflare/server`](https://github.com/portflare/server)
 
 ### Client
 
@@ -35,13 +35,19 @@ The client handles:
 
 See:
 
-- [`../client`](../client)
+- [`github.com/portflare/client`](https://github.com/portflare/client)
+
+### Protocol
+
+Shared wire-level contracts and lightweight validation helpers live in:
+
+- [`github.com/portflare/protocol`](https://github.com/portflare/protocol)
 
 ### Embedded example
 
 If you want to package your app and the client in one image, use:
 
-- [`../client-embedded-example`](../client-embedded-example)
+- [`github.com/portflare/client-embedded-example`](https://github.com/portflare/client-embedded-example)
 
 ## Typical flow
 

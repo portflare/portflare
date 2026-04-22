@@ -6,19 +6,19 @@ Local testing is now documented in the individual repositories.
 
 See:
 
-- [`../server/docs/local-testing.md`](../server/docs/local-testing.md)
+- [`github.com/portflare/server/docs/local-testing.md`](https://github.com/portflare/server/blob/main/docs/local-testing.md)
 
 ## Client usage and discovery
 
 See:
 
-- [`../client/docs/usage.md`](../client/docs/usage.md)
+- [`github.com/portflare/client/docs/usage.md`](https://github.com/portflare/client/blob/main/docs/usage.md)
 
 ## Embedded image example
 
 See:
 
-- [`../client-embedded-example/docs/usage.md`](../client-embedded-example/docs/usage.md)
+- [`github.com/portflare/client-embedded-example/docs/usage.md`](https://github.com/portflare/client-embedded-example/blob/main/docs/usage.md)
 
 ## Recommended reading order
 

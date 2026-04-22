@@ -22,3 +22,9 @@ Thumbs.db
 *.log
 *.tmp
 *.swp
+
+# Local split repositories
+/server/
+/client/
+/client-embedded-example/
+/template/

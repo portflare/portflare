@@ -1,11 +1,25 @@
 # Portflare docs
 
-## Available documents
+This repository is now the top-level docs and overview hub for Portflare.
 
-- [Local testing guide](./local-testing.md)
+## Start here
 
-## Recommended starting point
+- [Getting started](./getting-started.md)
+- [Architecture overview](./architecture.md)
+- [Repository guide](./repositories.md)
 
-If you want to run the project locally with Docker, auth-disabled mode, approval settings, and live UI updates, start with:
+## Product overview
 
-- [Local testing guide](./local-testing.md)
+Portflare is split into separate repositories:
+
+- [`../server`](../server) — server, dashboard, approval flow, routing control plane
+- [`../client`](../client) — client daemon, discovery, local registration API
+- [`../client-embedded-example`](../client-embedded-example) — example embedded image
+
+## Repo-specific docs
+
+For implementation and operational detail, see each repo directly:
+
+- `server/docs/`
+- `client/docs/`
+- `client-embedded-example/docs/`

@@ -27,4 +27,5 @@ Thumbs.db
 /server/
 /client/
 /client-embedded-example/
+/protocol/
 /template/

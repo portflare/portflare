@@ -14,9 +14,10 @@ It is built for teams that want:
 
 Portflare is now split into focused repositories:
 
-- [`server/`](./server) — the Portflare server, dashboard, approval flow, and routing control plane
-- [`client/`](./client) — the Portflare client daemon and local API
-- [`client-embedded-example/`](./client-embedded-example) — an example app image that embeds the client
+- [`github.com/portflare/server`](https://github.com/portflare/server) — the Portflare server, dashboard, approval flow, and routing control plane
+- [`github.com/portflare/client`](https://github.com/portflare/client) — the Portflare client daemon and local API
+- [`github.com/portflare/protocol`](https://github.com/portflare/protocol) — shared wire-level types and lightweight validation helpers
+- [`github.com/portflare/client-embedded-example`](https://github.com/portflare/client-embedded-example) — an example app image that embeds the client
 
 This root repository should now act primarily as a lightweight landing page, docs hub, and project overview.
 
@@ -25,7 +26,8 @@ This root repository should now act primarily as a lightweight landing page, doc
 1. The **server** provides the dashboard, user management hooks, approval flow, and public routing.
 2. The **client** connects to the server using a per-user client key.
 3. The client registers local apps either manually or by discovery.
-4. Approved apps become reachable on public Portflare URLs.
+4. Shared wire contracts can live in **protocol** without forcing the client to import server implementation code.
+5. Approved apps become reachable on public Portflare URLs.
 
 Typical route pattern:
 
@@ -55,7 +57,7 @@ reverse-client expose --app web --target http://127.0.0.1:3000
 
 If you want one container image that runs both your app and Portflare, start from:
 
-- [`client-embedded-example/`](./client-embedded-example)
+- [`github.com/portflare/client-embedded-example`](https://github.com/portflare/client-embedded-example)
 
 ## Documentation
 
@@ -66,4 +68,4 @@ If you want one container image that runs both your app and Portflare, start fro
 
 ## Status
 
-Portflare is still evolving, but the repositories are now split so the server, client, and embedded example can be built, released, and documented independently.
+Portflare is still evolving, but the repositories are now split so the server, client, protocol layer, and embedded example can be built, released, and documented independently.

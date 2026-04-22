@@ -1,6 +1,6 @@
 # Architecture overview
 
-Portflare has three primary pieces.
+Portflare has four primary pieces.
 
 ## 1. Server
 
@@ -16,7 +16,7 @@ Responsibilities:
 
 Repository:
 
-- [`../server`](../server)
+- [`github.com/portflare/server`](https://github.com/portflare/server)
 
 ## 2. Client
 
@@ -31,15 +31,30 @@ Responsibilities:
 
 Repository:
 
-- [`../client`](../client)
+- [`github.com/portflare/client`](https://github.com/portflare/client)
 
-## 3. Embedded example
+## 3. Protocol
+
+The protocol repository holds shared wire-level contracts.
+
+Responsibilities:
+
+- shared websocket message types
+- shared JSON payload structs
+- lightweight cross-repo validation helpers
+- protocol constants that should stay consistent between server and client
+
+Repository:
+
+- [`github.com/portflare/protocol`](https://github.com/portflare/protocol)
+
+## 4. Embedded example
 
 The embedded example shows how to bundle an app and the client into one image.
 
 Repository:
 
-- [`../client-embedded-example`](../client-embedded-example)
+- [`github.com/portflare/client-embedded-example`](https://github.com/portflare/client-embedded-example)
 
 ## Dependency guidance
 
@@ -47,11 +62,10 @@ The preferred relationship is:
 
 - `server` is independent
 - `client` is independent
+- `protocol` is shared by `server` and `client`
 - `client-embedded-example` depends on `client`
 
 Avoid making `client` import `server` implementation packages.
-
-If server and client need common protocol or validation helpers later, add a small shared package or repository specifically for those wire-level concerns.
 
 ## Routing model
 

@@ -12,9 +12,9 @@ Owns:
 - admin settings
 - server image publishing
 
-Paths:
+Repository:
 
-- [`../server`](../server)
+- [`github.com/portflare/server`](https://github.com/portflare/server)
 
 ## `client`
 
@@ -27,9 +27,23 @@ Owns:
 - discovery mode
 - client image publishing
 
-Paths:
+Repository:
 
-- [`../client`](../client)
+- [`github.com/portflare/client`](https://github.com/portflare/client)
+
+## `protocol`
+
+Repository for shared wire-level contracts.
+
+Owns:
+
+- shared protocol structs
+- shared message type constants
+- lightweight validation helpers used by both sides
+
+Repository:
+
+- [`github.com/portflare/protocol`](https://github.com/portflare/protocol)
 
 ## `client-embedded-example`
 
@@ -42,15 +56,16 @@ Owns:
 - sample app packaging pattern
 - embedded example image publishing
 
-Paths:
+Repository:
 
-- [`../client-embedded-example`](../client-embedded-example)
+- [`github.com/portflare/client-embedded-example`](https://github.com/portflare/client-embedded-example)
 
 ## Why split them
 
 The split makes it easier to:
 
 - release server and client independently
+- keep shared wire contracts small and intentional
 - publish cleaner Docker images
 - separate implementation concerns
 - keep example code out of the main client repository

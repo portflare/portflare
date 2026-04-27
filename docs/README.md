@@ -7,6 +7,7 @@ This repository is now the top-level docs and overview hub for Portflare.
 - [Getting started](./getting-started.md)
 - [Architecture overview](./architecture.md)
 - [Repository guide](./repositories.md)
+- [Deployment learnings](./learnings.md)
 
 ## Product overview
 

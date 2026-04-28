@@ -53,7 +53,7 @@ If you want to package your app and the client in one image, use:
 
 1. Run the server.
 2. Obtain a client key.
-3. Start the client with `REVERSE_SERVER_URL` and `REVERSE_CLIENT_KEY`.
+3. Start the client with `PORTFLARE_SERVER_URL` and `PORTFLARE_CLIENT_KEY`.
 4. Register an app manually or use discovery mode.
 5. Approve the app if approval is required.
 6. Access it on its public URL.
@@ -61,8 +61,8 @@ If you want to package your app and the client in one image, use:
 ## Minimal client example
 
 ```bash
-export REVERSE_SERVER_URL=https://r.myw.io
-export REVERSE_CLIENT_KEY=pf_your_key_here
+export PORTFLARE_SERVER_URL=https://r.myw.io
+export PORTFLARE_CLIENT_KEY=pf_your_key_here
 portflare daemon
 portflare expose --app web --target http://127.0.0.1:3000
 ```

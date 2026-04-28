@@ -14,7 +14,7 @@ Portflare has two runtime pieces:
 
 2. **Client**
    - Runs near the application being exposed.
-   - Connects outbound to the server using `REVERSE_SERVER_URL` and `REVERSE_CLIENT_KEY`.
+   - Connects outbound to the server using `PORTFLARE_SERVER_URL` and `PORTFLARE_CLIENT_KEY`.
    - Registers one or more local apps with target URLs such as `http://127.0.0.1:3000`.
    - Handles proxied requests from the server and forwards them to the local app.
 
@@ -27,16 +27,16 @@ For the homelab setup, the server runs as a Docker service on port `8080` intern
 Important server environment variables:
 
 ```yaml
-REVERSE_SERVER_LISTEN_ADDR: ":8080"
-REVERSE_BASE_DOMAIN: r.myw.io
-REVERSE_STATE_PATH: /var/lib/portflare/state.json
-REVERSE_ADMIN_USERS: bjorn@myw.io
-REVERSE_DISABLE_AUTH: ${REVERSE_DISABLE_AUTH:-false}
-REVERSE_TRUST_AUTH_HEADERS: ${REVERSE_TRUST_AUTH_HEADERS:-true}
-REVERSE_REGISTRATION_OPEN: ${REVERSE_REGISTRATION_OPEN:-true}
-REVERSE_ALLOW_USER_APP_APPROVAL: ${REVERSE_ALLOW_USER_APP_APPROVAL:-false}
-REVERSE_AUTO_APPROVE_APPS_FOR_USERS: ${REVERSE_AUTO_APPROVE_APPS_FOR_USERS:-false}
-REVERSE_AUTO_APPROVE_APPS_FOR_ADMINS: ${REVERSE_AUTO_APPROVE_APPS_FOR_ADMINS:-false}
+PORTFLARE_SERVER_LISTEN_ADDR: ":8080"
+PORTFLARE_BASE_DOMAIN: r.myw.io
+PORTFLARE_STATE_PATH: /var/lib/portflare/state.json
+PORTFLARE_ADMIN_USERS: bjorn@myw.io
+PORTFLARE_DISABLE_AUTH: ${PORTFLARE_DISABLE_AUTH:-false}
+PORTFLARE_TRUST_AUTH_HEADERS: ${PORTFLARE_TRUST_AUTH_HEADERS:-true}
+PORTFLARE_REGISTRATION_OPEN: ${PORTFLARE_REGISTRATION_OPEN:-true}
+PORTFLARE_ALLOW_USER_APP_APPROVAL: ${PORTFLARE_ALLOW_USER_APP_APPROVAL:-false}
+PORTFLARE_AUTO_APPROVE_APPS_FOR_USERS: ${PORTFLARE_AUTO_APPROVE_APPS_FOR_USERS:-false}
+PORTFLARE_AUTO_APPROVE_APPS_FOR_ADMINS: ${PORTFLARE_AUTO_APPROVE_APPS_FOR_ADMINS:-false}
 ```
 
 The server listens on `:8080`, but it does not need to publish that port to the host if Caddy is on the same Docker network. In Compose, use `expose`, not `ports`:
@@ -94,7 +94,7 @@ Typical flow:
 Registration is controlled by state and initialized from:
 
 ```yaml
-REVERSE_REGISTRATION_OPEN: ${REVERSE_REGISTRATION_OPEN:-true}
+PORTFLARE_REGISTRATION_OPEN: ${PORTFLARE_REGISTRATION_OPEN:-true}
 ```
 
 Admins can toggle registration in the admin dashboard:
@@ -112,18 +112,18 @@ A new user does not need a manual invitation record in the state file as long as
 The client needs a user API key:
 
 ```env
-REVERSE_CLIENT_KEY=pf_your_key_here
+PORTFLARE_CLIENT_KEY=pf_your_key_here
 ```
 
 For Compose deployments, put this in `.env` and ensure `.env` is ignored by Git.
 
-If a real `REVERSE_CLIENT_KEY` appears in chat logs, shell history, CI logs, screenshots, or a public issue, treat it as compromised and rotate it from the Portflare user page.
+If a real `PORTFLARE_CLIENT_KEY` appears in chat logs, shell history, CI logs, screenshots, or a public issue, treat it as compromised and rotate it from the Portflare user page.
 
 Avoid hardcoding client keys into committed Compose files. It is acceptable to hardcode non-secret deployment values, such as:
 
 ```yaml
-REVERSE_SERVER_URL: https://r.myw.io
-REVERSE_BASE_DOMAIN: r.myw.io
+PORTFLARE_SERVER_URL: https://r.myw.io
+PORTFLARE_BASE_DOMAIN: r.myw.io
 ```
 
 but API keys should remain local secrets.
@@ -154,14 +154,14 @@ services:
     network_mode: "service:pi"
     restart: unless-stopped
     environment:
-      REVERSE_SERVER_URL: https://r.myw.io
-      REVERSE_CLIENT_KEY: ${REVERSE_CLIENT_KEY}
-      REVERSE_CLIENT_LISTEN_ADDR: 127.0.0.1:9901
-      REVERSE_CLIENT_STATE_PATH: /state/state.json
-      REVERSE_CLIENT_DISCOVER: "true"
-      REVERSE_CLIENT_DISCOVER_ALLOW: 3000,8080,9000-9100
-      REVERSE_CLIENT_DISCOVER_DENY: 22,2375,2376
-      REVERSE_CLIENT_DISCOVER_NAMES: 3000=web,8080=admin
+      PORTFLARE_SERVER_URL: https://r.myw.io
+      PORTFLARE_CLIENT_KEY: ${PORTFLARE_CLIENT_KEY}
+      PORTFLARE_CLIENT_LISTEN_ADDR: 127.0.0.1:9901
+      PORTFLARE_CLIENT_STATE_PATH: /state/state.json
+      PORTFLARE_CLIENT_DISCOVER: "true"
+      PORTFLARE_CLIENT_DISCOVER_ALLOW: 3000,8080,9000-9100
+      PORTFLARE_CLIENT_DISCOVER_DENY: 22,2375,2376
+      PORTFLARE_CLIENT_DISCOVER_NAMES: 3000=web,8080=admin
     volumes:
       - ./data/portflare-client:/state
 ```
@@ -199,11 +199,11 @@ Use this when the image already includes the Portflare client. Pass the client e
 ```bash
 docker run --rm -it \
   --name my-app \
-  -e REVERSE_SERVER_URL=https://r.myw.io \
-  -e REVERSE_CLIENT_KEY \
-  -e REVERSE_CLIENT_DISCOVER=true \
-  -e REVERSE_CLIENT_DISCOVER_ALLOW=3000,8080,9000-9100 \
-  -e REVERSE_CLIENT_DISCOVER_NAMES=3000=web,8080=admin \
+  -e PORTFLARE_SERVER_URL=https://r.myw.io \
+  -e PORTFLARE_CLIENT_KEY \
+  -e PORTFLARE_CLIENT_DISCOVER=true \
+  -e PORTFLARE_CLIENT_DISCOVER_ALLOW=3000,8080,9000-9100 \
+  -e PORTFLARE_CLIENT_DISCOVER_NAMES=3000=web,8080=admin \
   my-app-image
 ```
 
@@ -223,13 +223,13 @@ Then start Portflare sharing that exact container's network namespace:
 docker run -d \
   --name my-app-portflare \
   --network container:my-app \
-  -e REVERSE_SERVER_URL=https://r.myw.io \
-  -e REVERSE_CLIENT_KEY \
-  -e REVERSE_CLIENT_LISTEN_ADDR=127.0.0.1:9901 \
-  -e REVERSE_CLIENT_STATE_PATH=/state/state.json \
-  -e REVERSE_CLIENT_DISCOVER=true \
-  -e REVERSE_CLIENT_DISCOVER_ALLOW=3000,8080,9000-9100 \
-  -e REVERSE_CLIENT_DISCOVER_NAMES=3000=web,8080=admin \
+  -e PORTFLARE_SERVER_URL=https://r.myw.io \
+  -e PORTFLARE_CLIENT_KEY \
+  -e PORTFLARE_CLIENT_LISTEN_ADDR=127.0.0.1:9901 \
+  -e PORTFLARE_CLIENT_STATE_PATH=/state/state.json \
+  -e PORTFLARE_CLIENT_DISCOVER=true \
+  -e PORTFLARE_CLIENT_DISCOVER_ALLOW=3000,8080,9000-9100 \
+  -e PORTFLARE_CLIENT_DISCOVER_NAMES=3000=web,8080=admin \
   -v "$HOME/.config/portflare-client:/state" \
   ghcr.io/portflare/client:latest
 ```
@@ -259,10 +259,10 @@ Run one Portflare client on the same network:
 docker run -d \
   --name portflare \
   --network portflare-shared \
-  -e REVERSE_SERVER_URL=https://r.myw.io \
-  -e REVERSE_CLIENT_KEY \
-  -e REVERSE_CLIENT_LISTEN_ADDR=0.0.0.0:9901 \
-  -e REVERSE_CLIENT_STATE_PATH=/state/state.json \
+  -e PORTFLARE_SERVER_URL=https://r.myw.io \
+  -e PORTFLARE_CLIENT_KEY \
+  -e PORTFLARE_CLIENT_LISTEN_ADDR=0.0.0.0:9901 \
+  -e PORTFLARE_CLIENT_STATE_PATH=/state/state.json \
   -v "$HOME/.config/portflare-client:/state" \
   ghcr.io/portflare/client:latest
 ```
@@ -327,12 +327,12 @@ http://127.0.0.1:<port>
 Discovery configuration:
 
 ```env
-REVERSE_CLIENT_DISCOVER=true
-REVERSE_CLIENT_DISCOVER_ALLOW=3000,8080,9000-9100
-REVERSE_CLIENT_DISCOVER_DENY=22,2375,2376
-REVERSE_CLIENT_DISCOVER_NAMES=3000=web,8080=admin
-REVERSE_CLIENT_DISCOVER_INTERVAL=5s
-REVERSE_CLIENT_DISCOVER_GRACE=10m
+PORTFLARE_CLIENT_DISCOVER=true
+PORTFLARE_CLIENT_DISCOVER_ALLOW=3000,8080,9000-9100
+PORTFLARE_CLIENT_DISCOVER_DENY=22,2375,2376
+PORTFLARE_CLIENT_DISCOVER_NAMES=3000=web,8080=admin
+PORTFLARE_CLIENT_DISCOVER_INTERVAL=5s
+PORTFLARE_CLIENT_DISCOVER_GRACE=10m
 ```
 
 Discovery is best suited for:
@@ -366,7 +366,7 @@ Options if lifecycle coupling matters:
 The client exposes a local API using:
 
 ```env
-REVERSE_CLIENT_LISTEN_ADDR=127.0.0.1:9901
+PORTFLARE_CLIENT_LISTEN_ADDR=127.0.0.1:9901
 ```
 
 When a sidecar shares the app network namespace, the app container can talk to the sidecar API at:
@@ -385,7 +385,7 @@ portflare list
 If using one shared client for many containers on a Docker network, bind the API to `0.0.0.0:9901` only if other containers need to call it:
 
 ```env
-REVERSE_CLIENT_LISTEN_ADDR=0.0.0.0:9901
+PORTFLARE_CLIENT_LISTEN_ADDR=0.0.0.0:9901
 ```
 
 Be careful with this. The local API should remain private to trusted containers/networks.
@@ -435,7 +435,7 @@ Client state should also be persisted if you want registrations/approval status 
 volumes:
   - ./data/portflare-client:/state
 environment:
-  REVERSE_CLIENT_STATE_PATH: /state/state.json
+  PORTFLARE_CLIENT_STATE_PATH: /state/state.json
 ```
 
 ## 12. Compose validation
@@ -505,9 +505,9 @@ If `localhost` fails but container-name works, register the container-name targe
 
 Confirm:
 
-- `REVERSE_CLIENT_DISCOVER=true`
-- the port is included in `REVERSE_CLIENT_DISCOVER_ALLOW`
-- the port is not included in `REVERSE_CLIENT_DISCOVER_DENY`
+- `PORTFLARE_CLIENT_DISCOVER=true`
+- the port is included in `PORTFLARE_CLIENT_DISCOVER_ALLOW`
+- the port is not included in `PORTFLARE_CLIENT_DISCOVER_DENY`
 - the app is listening in the same network namespace as the client
 - the app is actually listening, not just printing a URL
 

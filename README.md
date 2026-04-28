@@ -42,8 +42,8 @@ Example:
 ### Run the client
 
 ```bash
-export REVERSE_SERVER_URL=https://r.myw.io
-export REVERSE_CLIENT_KEY=pf_your_key_here
+export PORTFLARE_SERVER_URL=https://r.myw.io
+export PORTFLARE_CLIENT_KEY=pf_your_key_here
 portflare daemon
 ```
 

@@ -44,13 +44,13 @@ Example:
 ```bash
 export REVERSE_SERVER_URL=https://r.myw.io
 export REVERSE_CLIENT_KEY=pf_your_key_here
-reverse-client daemon
+portflare daemon
 ```
 
 ### Expose a local app
 
 ```bash
-reverse-client expose --app web --target http://127.0.0.1:3000
+portflare expose --app web --target http://127.0.0.1:3000
 ```
 
 ### Embedded-image pattern

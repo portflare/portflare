@@ -63,8 +63,8 @@ If you want to package your app and the client in one image, use:
 ```bash
 export REVERSE_SERVER_URL=https://r.myw.io
 export REVERSE_CLIENT_KEY=pf_your_key_here
-reverse-client daemon
-reverse-client expose --app web --target http://127.0.0.1:3000
+portflare daemon
+portflare expose --app web --target http://127.0.0.1:3000
 ```
 
 ## Where to go next

@@ -10,6 +10,10 @@ This repository is now the top-level docs and overview hub for Portflare.
 - [Deployment learnings](./learnings.md)
 - [Phase 1: Auth-backed CLI registration](./auth-registration-phase-1.md)
 - [Phase 2: Server auth-service handoff](./auth-dashboard-phase-2.md)
+- [Auth handoff scout review](./auth-handoff-scout-review.md)
+- [Auth handoff implementation plan](./auth-handoff-phase-plan.md)
+- [Protocol auth worker notes](./auth-handoff-protocol-worker.md)
+- [Protocol auth review notes](./auth-handoff-protocol-review.md)
 
 ## Product overview
 

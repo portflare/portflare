@@ -16,6 +16,9 @@ This repository is now the top-level docs and overview hub for Portflare.
 - [Protocol auth review notes](./auth-handoff-protocol-review.md)
 - [Auth service worker notes](./auth-handoff-auth-service-worker.md)
 - [Auth service review notes](./auth-handoff-auth-service-review.md)
+- [Client TUI/GUI scout report](./client-tui-gui-scout.md)
+- [Client TUI/GUI research](./client-tui-gui-research.md)
+- [Client TUI/GUI spec](./client-tui-gui-spec.md)
 
 ## Product overview
 

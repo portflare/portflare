@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portflare — Self-hosted app publishing for teams</title>
+    <meta
+      name="description"
+      content="Portflare helps teams securely publish local and containerized apps through a self-hosted reverse proxy with per-user URLs, approvals, and lightweight clients."
+    />
+    <meta property="og:title" content="Portflare — Self-hosted app publishing for teams" />
+    <meta
+      property="og:description"
+      content="Expose local and container apps through a self-hosted control plane with clean URLs, approvals, and a lightweight CLI."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#08111f" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="nav" data-nav>
+        <a class="brand" href="#top" aria-label="Portflare home">
+          <span class="brand-mark">pf</span>
+          <span>Portflare</span>
+        </a>
+        <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" data-nav-toggle>
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="nav-links" data-nav-links>
+          <a href="#product">Product</a>
+          <a href="#teams">Teams</a>
+          <a href="#security">Security</a>
+          <a href="#quickstart">Quick start</a>
+          <a class="nav-cta" href="../docs/getting-started.md">Docs</a>
+        </nav>
+      </header>
+
+      <main id="top">
+        <section class="hero section-pad">
+          <div class="hero-grid">
+            <div class="hero-copy reveal">
+              <p class="eyebrow">Self-hosted tunnels for modern teams</p>
+              <h1>Publish local and private apps without handing your network to a third party.</h1>
+              <p class="hero-lede">
+                Portflare gives teams a lightweight way to expose apps running on laptops, dev boxes, homelabs,
+                and containers through a central reverse proxy with clean URLs, approvals, and a CLI-first workflow.
+              </p>
+              <div class="hero-actions">
+                <a class="button primary" href="#quickstart">Start building</a>
+                <a class="button secondary" href="../docs/architecture.md">View architecture</a>
+              </div>
+              <div class="hero-proof" aria-label="Product highlights">
+                <span>Self-hosted control plane</span>
+                <span>Per-user app URLs</span>
+                <span>Approval workflows</span>
+              </div>
+            </div>
+
+            <div class="terminal-card reveal" aria-label="Portflare CLI example">
+              <div class="terminal-top">
+                <span></span><span></span><span></span>
+                <p>portflare</p>
+              </div>
+              <pre><code>$ portflare register --server https://r.example.dev
+registered user alice
+public label: alice
+client key: pf_••••••••••••••••
+
+$ portflare expose --app web --target http://127.0.0.1:3000
+{
+  "app_name": "web",
+  "public_url": "https://web-alice.r.example.dev",
+  "status": "pending approval"
+}</code></pre>
+              <div class="signal-card">
+                <span class="pulse"></span>
+                <div>
+                  <strong>Connected</strong>
+                  <p>Requests are routed through your Portflare server to the right client.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="logo-strip" aria-label="Common environments">
+          <span>Docker</span>
+          <span>Homelabs</span>
+          <span>Preview apps</span>
+          <span>Internal tools</span>
+          <span>Remote teams</span>
+        </section>
+
+        <section id="product" class="section-pad">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Product</p>
+            <h2>A practical publishing layer for apps that are not ready for the public internet.</h2>
+            <p>
+              Portflare sits between your users and your running apps. The server owns routing and approvals, while
+              clients run next to the workloads they expose.
+            </p>
+          </div>
+
+          <div class="feature-grid">
+            <article class="feature-card reveal">
+              <span class="icon">↗</span>
+              <h3>Clean public URLs</h3>
+              <p>Expose apps as <code>app-user.your-domain</code> or through path-based routes for local testing.</p>
+            </article>
+            <article class="feature-card reveal">
+              <span class="icon">✓</span>
+              <h3>Approvals by default</h3>
+              <p>New apps can require admin or user approval before traffic flows through the proxy.</p>
+            </article>
+            <article class="feature-card reveal">
+              <span class="icon">⌁</span>
+              <h3>Container-friendly clients</h3>
+              <p>Run Portflare as a sidecar, embedded process, or standalone daemon with a local management API.</p>
+            </article>
+            <article class="feature-card reveal">
+              <span class="icon">◷</span>
+              <h3>Traffic visibility</h3>
+              <p>Track app traffic in interval buckets and build toward dashboards, quotas, or Prometheus exports.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="workflow section-pad">
+          <div class="workflow-card reveal">
+            <div>
+              <p class="eyebrow">How it works</p>
+              <h2>Three moving parts. One controlled path to your apps.</h2>
+            </div>
+            <div class="steps">
+              <div class="step">
+                <span>01</span>
+                <h3>Run the server</h3>
+                <p>Host the dashboard, routing control plane, registration, and approval flow on your domain.</p>
+              </div>
+              <div class="step">
+                <span>02</span>
+                <h3>Connect clients</h3>
+                <p>Install the CLI or container sidecar near the apps you want to publish.</p>
+              </div>
+              <div class="step">
+                <span>03</span>
+                <h3>Approve and route</h3>
+                <p>Approved apps receive stable URLs and proxy traffic back to the correct client.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="teams" class="section-pad split-section">
+          <div class="section-heading align-left reveal">
+            <p class="eyebrow">For teams and individuals</p>
+            <h2>Built for the messy middle between localhost and production.</h2>
+            <p>
+              Share prototypes, internal tools, homelab services, customer demos, or team previews without opening
+              random firewall holes or manually wiring one-off reverse proxies.
+            </p>
+          </div>
+          <div class="use-case-list">
+            <article class="use-case reveal">
+              <h3>Engineering teams</h3>
+              <p>Give every developer a predictable namespace for previews and in-progress services.</p>
+            </article>
+            <article class="use-case reveal">
+              <h3>Platform teams</h3>
+              <p>Centralize approval, routing, and observability while letting teams self-serve app exposure.</p>
+            </article>
+            <article class="use-case reveal">
+              <h3>Builders and homelabs</h3>
+              <p>Publish useful tools from private machines while keeping the control plane in your hands.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="security" class="section-pad security-section">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Security model</p>
+            <h2>Designed around explicit trust boundaries.</h2>
+            <p>
+              Portflare is moving toward auth-service backed registration where authentication is isolated and the
+              server only trusts configured backend identity assertions.
+            </p>
+          </div>
+          <div class="security-grid">
+            <div class="security-item reveal">
+              <strong>Self-hosted authority</strong>
+              <span>Your server owns users, apps, approvals, and API keys.</span>
+            </div>
+            <div class="security-item reveal">
+              <strong>Provider hub</strong>
+              <span>The auth service handles Google first, with room for GitHub and other providers.</span>
+            </div>
+            <div class="security-item reveal">
+              <strong>Strong handoff</strong>
+              <span>Short-lived codes, state validation, PKCE, and signed backend verification.</span>
+            </div>
+          </div>
+        </section>
+
+        <section id="quickstart" class="section-pad quickstart">
+          <div class="quickstart-copy reveal">
+            <p class="eyebrow">Quick start</p>
+            <h2>Get from local app to public URL in minutes.</h2>
+            <p>
+              Start with the server, register a client key, then expose a local target. Portflare keeps the client
+              and server responsibilities separate so each piece can be deployed independently.
+            </p>
+          </div>
+          <div class="code-stack reveal">
+            <div class="code-block">
+              <span>1. Start the client</span>
+              <pre><code>export PORTFLARE_SERVER_URL=https://r.example.dev
+export PORTFLARE_CLIENT_KEY=pf_your_key_here
+portflare daemon</code></pre>
+            </div>
+            <div class="code-block">
+              <span>2. Expose an app</span>
+              <pre><code>portflare expose \
+  --app web \
+  --target http://127.0.0.1:3000</code></pre>
+            </div>
+            <div class="code-block">
+              <span>3. Visit the URL</span>
+              <pre><code>https://web-alice.r.example.dev</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="cta-section section-pad reveal">
+          <div>
+            <p class="eyebrow">Ready to try Portflare?</p>
+            <h2>Bring controlled app publishing to your own infrastructure.</h2>
+          </div>
+          <div class="hero-actions">
+            <a class="button primary" href="../docs/getting-started.md">Read the docs</a>
+            <a class="button secondary" href="../server/README.md">Run the server</a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="brand">
+          <span class="brand-mark">pf</span>
+          <span>Portflare</span>
+        </div>
+        <div class="footer-links">
+          <a href="../docs/README.md">Docs</a>
+          <a href="../client/README.md">Client</a>
+          <a href="../server/README.md">Server</a>
+          <a href="../auth/README.md">Auth</a>
+        </div>
+      </footer>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>

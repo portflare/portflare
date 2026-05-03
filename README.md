@@ -59,6 +59,10 @@ If you want one container image that runs both your app and Portflare, start fro
 
 - [`github.com/portflare/client-embedded-example`](https://github.com/portflare/client-embedded-example)
 
+## Website
+
+A static marketing site lives in [`website/`](./website/). Open `website/index.html` directly or serve it with any static file server.
+
 ## Documentation
 
 - [Docs index](./docs/README.md)

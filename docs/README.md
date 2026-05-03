@@ -8,6 +8,7 @@ This repository is now the top-level docs and overview hub for Portflare.
 - [Architecture overview](./architecture.md)
 - [Repository guide](./repositories.md)
 - [Deployment learnings](./learnings.md)
+- [Phase 1: Auth-backed CLI registration](./auth-registration-phase-1.md)
 
 ## Product overview
 

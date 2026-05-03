@@ -14,6 +14,8 @@ This repository is now the top-level docs and overview hub for Portflare.
 - [Auth handoff implementation plan](./auth-handoff-phase-plan.md)
 - [Protocol auth worker notes](./auth-handoff-protocol-worker.md)
 - [Protocol auth review notes](./auth-handoff-protocol-review.md)
+- [Auth service worker notes](./auth-handoff-auth-service-worker.md)
+- [Auth service review notes](./auth-handoff-auth-service-review.md)
 
 ## Product overview
 

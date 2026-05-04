@@ -19,6 +19,8 @@ This repository is now the top-level docs and overview hub for Portflare.
 - [Client TUI/GUI scout report](./client-tui-gui-scout.md)
 - [Client TUI/GUI research](./client-tui-gui-research.md)
 - [Client TUI/GUI spec](./client-tui-gui-spec.md)
+- [Discovery naming scout report](./discovery-naming-scout.md)
+- [Discovery naming prefix/protocol plan](./discovery-naming-prefix-plan.md)
 
 ## Product overview
 

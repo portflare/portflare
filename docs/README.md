@@ -21,6 +21,10 @@ This repository is now the top-level docs and overview hub for Portflare.
 - [Client TUI/GUI spec](./client-tui-gui-spec.md)
 - [Discovery naming scout report](./discovery-naming-scout.md)
 - [Discovery naming prefix/protocol plan](./discovery-naming-prefix-plan.md)
+- [Discovery naming implementation worker notes](./discovery-naming-implementation-worker.md)
+- [Discovery naming correctness review](./discovery-naming-review-correctness.md)
+- [Discovery naming test review](./discovery-naming-review-tests.md)
+- [Discovery naming UX/security/maintainability review](./discovery-naming-review-ux.md)
 
 ## Product overview
 

@@ -331,9 +331,14 @@ PORTFLARE_CLIENT_DISCOVER=true
 PORTFLARE_CLIENT_DISCOVER_ALLOW=3000,8080,9000-9100
 PORTFLARE_CLIENT_DISCOVER_DENY=22,2375,2376
 PORTFLARE_CLIENT_DISCOVER_NAMES=3000=web,8080=admin
+PORTFLARE_CLIENT_DISCOVER_DESCRIPTOR=devbox
+PORTFLARE_CLIENT_DISCOVER_NAME_TEMPLATE=descriptor-proto-port
+PORTFLARE_CLIENT_DISCOVER_PROTOCOLS=3000=http,6379=redis
 PORTFLARE_CLIENT_DISCOVER_INTERVAL=5s
 PORTFLARE_CLIENT_DISCOVER_GRACE=10m
 ```
+
+By default discovery names apps `app-{port}`. Exact names in `PORTFLARE_CLIENT_DISCOVER_NAMES` still override generated names. `PORTFLARE_CLIENT_DISCOVER_DESCRIPTOR` and `PORTFLARE_CLIENT_DISCOVER_NAME_TEMPLATE` can generate names such as `devbox-3000`, `devbox-http-3000`, or `devbox-redis`. Protocol labels are naming metadata only; they do not add database/raw TCP proxy support by themselves. Changing naming settings can create new app identities and public URLs on the server rather than renaming old entries.
 
 Discovery is best suited for:
 

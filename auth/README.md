@@ -9,6 +9,7 @@ It owns authentication provider logic and returns verified identity assertions t
 This initial skeleton includes:
 
 - `GET /healthz`
+- `GET /readyz` with application/version/build/Go debug metadata
 - environment-driven config parsing
 - trusted backend HMAC verification utilities for future internal verify endpoints
 

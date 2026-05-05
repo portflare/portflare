@@ -11,6 +11,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/portflare/auth/internal/buildinfo"
 	"github.com/portflare/auth/internal/config"
 )
 
@@ -55,7 +56,18 @@ func routes(cfg config.Config) http.Handler {
 		}
 		writeJSON(w, http.StatusOK, map[string]any{"ok": true, "service": "portflare-auth", "google_enabled": cfg.GoogleEnabled()})
 	})
+	mux.HandleFunc("/readyz", handleReadyz("portflare-auth"))
 	return mux
+}
+
+func handleReadyz(application string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			writeJSON(w, http.StatusMethodNotAllowed, map[string]any{"error": "method not allowed"})
+			return
+		}
+		writeJSON(w, http.StatusOK, buildinfo.Ready(application))
+	}
 }
 
 func writeJSON(w http.ResponseWriter, status int, value any) {
